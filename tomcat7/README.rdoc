@@ -1,0 +1,8 @@
+= DESCRIPTION:
+Installs Tomcat 7.0.23 using Apache's binaries downloaded from official website.
+= REQUIREMENTS:
+Require JRE
+= ATTRIBUTES:
+* node['tomcat7']['target_folder'] sets the destination folder / $CATALINA_HOME
+= USAGE:
+
