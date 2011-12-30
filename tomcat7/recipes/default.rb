@@ -65,3 +65,37 @@ link "#{tc7target}/tomcat" do
     to "apache-tomcat-7.0.23"
     link_type :symbolic
 end
+
+case node["platform"]
+when "debian","ubuntu"
+    template "/etc/init.d/tomcat7" do
+	source "init-debian.erb"
+	owner "root"
+	group "root"
+	mode "0755"
+    end
+    execute "init-deb" do
+	user "root"
+	group "root"
+	command "update-rc.d tomcat7 defaults"
+	action :run
+    end
+else
+    template "/etc/init.d/tomcat7" do
+	source "init-rh.erb"
+	owner "root"
+	group "root"
+	mode "0755"
+    end
+    execute "init-rh" do
+	user "root"
+	group "root"
+	command "chkconfig --add tomcat7"
+	action :run
+    end
+end
+
+service "tomcat7" do
+    service_name "tomcat7"
+    
+end
