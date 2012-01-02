@@ -75,7 +75,7 @@ CATALINA_HOME=<%= node[:tomcat7][:home] %>
 CATALINA_BASE=<%= node[:tomcat7][:base] %>
 
 # Use the Java security manager? (yes/no)
-TOMCAT7_SECURITY=<%= node[:tomcat7][:use_security_manger] %>
+TOMCAT7_SECURITY=<%= node[:tomcat7][:use_security_manager] %>
 
 # Default Java options
 # Set java.awt.headless=true if JAVA_OPTS is not set so the
@@ -180,11 +180,11 @@ case "$1" in
 
 	# Regenerate POLICY_CACHE file
 	umask 022
-	echo "// AUTO-GENERATED FILE from /etc/tomcat7/policy.d/" \
-	> "$POLICY_CACHE"
-	echo "" >> "$POLICY_CACHE"
-	cat $CATALINA_BASE/conf/policy.d/*.policy \
-	>> "$POLICY_CACHE"
+	#echo "// AUTO-GENERATED FILE from /etc/tomcat7/policy.d/" \
+	#> "$POLICY_CACHE"
+	#echo "" >> "$POLICY_CACHE"
+	#cat $CATALINA_BASE/conf/policy.d/*.policy \
+	#>> "$POLICY_CACHE"
 
 	# Remove / recreate JVM_TMP directory
 	rm -rf "$JVM_TMP"
