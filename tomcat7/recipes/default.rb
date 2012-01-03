@@ -6,8 +6,9 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-tc7tarball = "apache-tomcat-7.0.23.tar.gz"
-tc7url = "http://mirrors.kahuki.com/apache/tomcat/tomcat-7/v7.0.23/bin/apache-tomcat-7.0.23.tar.gz"
+tc7ver = "7.0.23"
+tc7tarball = "apache-tomcat-#{tc7ver}.tar.gz"
+tc7url = "http://mirrors.kahuki.com/apache/tomcat/tomcat-7/v#{tc7ver}/bin/#{tc7tarball}"
 tc7target = "/usr/local"
 tc7user = "tomcat"
 tc7group = "tomcat"
@@ -45,7 +46,7 @@ user "#{tc7user}" do
     action :create
 end
 
-directory "#{tc7target}/apache-tomcat-7.0.23" do
+directory "#{tc7target}/apache-tomcat-#{tc7ver}" do
     owner "#{tc7user}"
     group "#{tc7group}"
     mode "0755"
@@ -62,7 +63,7 @@ execute "tar" do
 end
 
 link "#{tc7target}/tomcat" do
-    to "apache-tomcat-7.0.23"
+    to "apache-tomcat-#{tc7ver}"
     link_type :symbolic
 end
 
@@ -97,5 +98,5 @@ end
 
 service "tomcat7" do
     service_name "tomcat7"
-    
+    action :start
 end

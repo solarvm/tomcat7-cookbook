@@ -1,5 +1,6 @@
-tc7tarball = "apache-tomcat-7.0.23.tar.gz"
-tc7download = "http://mirrors.kahuki.com/apache/tomcat/tomcat-7/v7.0.23/bin/apache-tomcat-7.0.23.tar.gz"
+tc7ver = "7.0.23"
+tc7tarball = "apache-tomcat-#{tc7ver}.tar.gz"
+tc7download = "http://mirrors.kahuki.com/apache/tomcat/tomcat-7/v#{tc7ver}/bin/#{tc7tarball}"
 tc7target = "/usr/local"
 tc7user = "tomcat"
 tc7group = "tomcat"
