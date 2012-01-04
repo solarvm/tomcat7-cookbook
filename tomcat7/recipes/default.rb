@@ -13,30 +13,19 @@ tc7target = "/usr/local"
 tc7user = "tomcat"
 tc7group = "tomcat"
 
+# Get binary distro
 remote_file "/tmp/#{tc7tarball}" do
     source "#{tc7url}"
     mode "0644"
     checksum "d8dcd5fb07dd1769d571fdabade9cc68"
 end
 
-#execute "addgroup" do
-#    user "root"
-#    group "root"
-#    command "addgroup #{tc7group}"
-#    action :run
-#end
-
+# Create group
 group "#{tc7group}" do
     action :create
 end
 
-#execute "adduser" do
-#    user "root"
-#    group "root"
-#    command "adduser -s /bin/false -g #{tc7group} #{tc7user}"
-#    action :run
-#end
-
+# Create user
 user "#{tc7user}" do
     comment "Tomcat7 user"
     gid "#{tc7group}"
@@ -46,6 +35,7 @@ user "#{tc7user}" do
     action :create
 end
 
+# Create base folder
 directory "#{tc7target}/apache-tomcat-#{tc7ver}" do
     owner "#{tc7user}"
     group "#{tc7group}"
@@ -53,6 +43,7 @@ directory "#{tc7target}/apache-tomcat-#{tc7ver}" do
     action :create
 end
 
+# Extract
 execute "tar" do
     user "#{tc7user}"
     group "#{tc7group}"
@@ -62,11 +53,13 @@ execute "tar" do
     action :run
 end
 
+# Set the symlink
 link "#{tc7target}/tomcat" do
     to "apache-tomcat-#{tc7ver}"
     link_type :symbolic
 end
 
+# Add the init-script
 case node["platform"]
 when "debian","ubuntu"
     template "/etc/init.d/tomcat7" do
@@ -96,6 +89,15 @@ else
     end
 end
 
+# Config from template
+template "#{tc7target}/tomcat/conf/server.xml" do
+    source "server.xml.erb"
+    owner "#{tc7user}"
+    group "#{tc7group}"
+    mode "0644"
+end
+
+# Start service
 service "tomcat7" do
     service_name "tomcat7"
     action :start
