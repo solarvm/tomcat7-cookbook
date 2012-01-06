@@ -6,12 +6,12 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-tc7ver = "7.0.23"
+tc7ver = node["tomcat7"]["version"]
 tc7tarball = "apache-tomcat-#{tc7ver}.tar.gz"
 tc7url = "http://mirrors.kahuki.com/apache/tomcat/tomcat-7/v#{tc7ver}/bin/#{tc7tarball}"
-tc7target = "/usr/local"
-tc7user = "tomcat"
-tc7group = "tomcat"
+tc7target = node["tomcat7"]["target"]
+tc7user = node["tomcat7"]["user"]
+tc7group = node["tomcat7"]["group"]
 
 # Get binary distro
 remote_file "/tmp/#{tc7tarball}" do
